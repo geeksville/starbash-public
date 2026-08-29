@@ -1,0 +1,12 @@
+# Starbash images
+
+This repository is managed by [Starbash](https://github.com/geeksville/starbash) for geeksville.
+
+You probably don't want to manage it directly.  Instead it **should** be automatically
+served up by github at https://geeksville.github.io/starbash-public/.
+
+If you want to see the 'raw' files used to generate the site they were auto generated
+[here](https://github.com/geeksville/starbash-public/tree/gh-pages).
+
+([Starbash](https://github.com/geeksville/starbash) is a young project but we look forward to improving it with your help.  
+If you want to try it we are eager for feedback.  With just a few clicks you can process all of your sessions... kinda)
