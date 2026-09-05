@@ -1,0 +1,183 @@
+[repo]
+kind = "processed-target"
+
+# This is auto generated at the root of a Starbash target processing tree
+# it is initially auto populated based on the best guess of starbash, but you
+# can customize as needed.  Any changes you make to this file will be preserved/used
+# in future runs.
+
+# The stages used to process this target are recorded below as a [[stages]]
+# array. Each entry has a name; add `excluded = true` to skip a stage, and
+# uncomment a value under [[stages.overrides]] to override a recipe parameter.
+# Starbash regenerates/augments this list on every run.
+
+[[stages]]
+name = "master_dark" # Generate master dark
+[[stages]]
+name = "master_bias" # Generate master bias
+[[stages]]
+name = "master_flat" # Generate master flat
+[[stages]]
+name = "light_vs_bias" # Extract OSC light calibrated vs bias
+[[stages.overrides]]
+name = "options" # Light frame calibration options for OSC cameras
+# value = "-cfa -equalize_cfa"
+[[stages]]
+name = "light_vs_dark" # Extract OSC light calibrated vs dark
+[[stages.overrides]]
+name = "options" # Light frame calibration options for OSC cameras
+# value = "-cfa -equalize_cfa"
+[[stages]]
+name = "light_no_darks" # Calibrate OSC lights that have no dark frames available
+[[stages.overrides]]
+name = "options" # Light frame calibration options for OSC cameras
+# value = "-cfa -equalize_cfa"
+[[stages]]
+name = "stack_osc" # Basic OSC stacking (no fancy narrowband extraction)
+[[stages.overrides]]
+name = "registration" # Registration options for Siril stacking
+# value = "rej w 3 3"
+
+[[stages.overrides]]
+name = "filtering" # Filtering options for Siril (controls which frames are accepted for stacking)
+# value = "-filter-wfwhm=3k"
+
+[[stages.overrides]]
+name = "drizzle" # Drizzle option for Siril stacking, set to empty string to disable, or -drizzle to enable
+# value = ""
+
+[[stages.overrides]]
+name = "options" # Misc options for Siril stacking
+# value = "-norm=addscale -output_norm -rgb_equal -32b"
+[[stages.overrides]]
+name = "framing" # Framing option for Siril stacking
+[[stages]]
+name = "seqextract_haoiii" # Extract OSC HaOiii channels
+[[stages]]
+name = "stack_dual_duo" # Stack OSC dual duo (HaOiii + SiiOiii) filter data: with separate Ha, Oiii and Sii channels
+[[stages]]
+name = "stack_single_duo" # Stack OSC single duo (HaOiii) filter data: with separate Ha and Oiii channels
+[[stages]]
+name = "background" # Do background subtraction with graxpert
+[[stages.overrides]]
+name = "smoothing_option" # Smoothing option for graxpert background extraction
+# value = 0.5
+
+[[stages.overrides]]
+name = "ai_version" # AI version for graxpert background extraction
+# value = "1.0.1"
+[[stages]]
+name = "deconv-obj" # Do object deconvolution with graxpert
+excluded = true
+[[stages]]
+name = "blur_exterminator" # Sharpen/deconvolve with BlurXTerminator (rc-astro bxt)
+[[stages.overrides]]
+name = "sharpen_stars" # BlurXTerminator stellar sharpening strength (0..1)
+# value = 0.5
+
+[[stages.overrides]]
+name = "sharpen_nonstellar" # BlurXTerminator non-stellar sharpening strength (0..1)
+# value = 0.5
+[[stages]]
+name = "denoise" # Do denoising with graxpert
+excluded = true
+[[stages]]
+name = "noise_exterminator" # Denoise with NoiseXTerminator (rc-astro nxt)
+[[stages.overrides]]
+name = "denoise" # NoiseXTerminator overall denoise strength (0..1)
+# value = 0.9
+
+[[stages.overrides]]
+name = "denoise_intensity" # NoiseXTerminator intensity denoise strength (0..1)
+# value =
+
+[[stages.overrides]]
+name = "denoise_color" # NoiseXTerminator chrominance denoise strength (0..1)
+# value =
+
+[[stages.overrides]]
+name = "denoise_hf" # NoiseXTerminator high-frequency (small scale) denoise strength (0..1)
+# value =
+
+[[stages.overrides]]
+name = "denoise_lf" # NoiseXTerminator low-frequency (large scale) denoise strength (0..1)
+# value =
+
+[[stages.overrides]]
+name = "denoise_intensity_hf" # NoiseXTerminator high-frequency intensity denoise strength (0..1)
+# value =
+
+[[stages.overrides]]
+name = "denoise_intensity_lf" # NoiseXTerminator low-frequency intensity denoise strength (0..1)
+# value =
+
+[[stages.overrides]]
+name = "denoise_color_hf" # NoiseXTerminator high-frequency color denoise strength (0..1)
+# value =
+
+[[stages.overrides]]
+name = "denoise_color_lf" # NoiseXTerminator low-frequency color denoise strength (0..1)
+# value =
+
+[[stages.overrides]]
+name = "frequency_scale" # Pixel scale of the low/high frequency transition band (1..100)
+# value =
+
+[[stages.overrides]]
+name = "iterations" # Number of denoising iterations (1..5)
+# value = 2
+[[stages]]
+name = "palette_sho" # SHO palette: R=Ha, G=Sii-or-synthetic, B=OIII
+[[stages.overrides]]
+name = "ha_weight" # Ha contribution when synthesizing the green channel (0..1)
+# value = 0.4
+
+[[stages.overrides]]
+name = "oiii_weight" # OIII contribution when synthesizing the green channel (0..1)
+# value = 0.6
+[[stages]]
+name = "palette_hoo" # HOO palette: R=Ha, G=OIII (optionally blended with Ha), B=OIII
+[[stages.overrides]]
+name = "green_ha_weight" # Ha contribution mixed into the green (OIII) channel (0..1); 0 = pure OIII green
+# value = 0.0
+[[stages]]
+name = "starnet" # Star removal with StarNet via Siril
+[[stages.overrides]]
+name = "params" # Options passed to the Siril 'starnet' command (e.g. -stretch, -upscale, -stride=value)
+# value = "-stretch"
+[[stages]]
+name = "veralux" # Do VeraLux HyperMetric Stretching
+[[stages.overrides]]
+name = "background" # What background level should be targeted for VeraLux HyperMetric Stretch
+# value = 0.1
+[[stages]]
+name = "merge_stars" # Screen-blend the removed stars back into the stretched starless image
+[[stages.overrides]]
+name = "stretch" # asinh stretch factor applied to the linear starmask before blending (higher = more stars visible)
+# value = 800.0
+[[stages]]
+name = "thumbnail" # Generate a stretched thumbnail image
+[[stages.overrides]]
+name = "size" # Maximum dimension for the thumbnail image
+# value = 1920
+
+[[stages.overrides]]
+name = "quality" # Quality setting for the thumbnail image (1-100)
+# value = 95
+[[stages]]
+name = "crop" # Crop and rotate stacked FITS outputs
+[[stages.overrides]]
+name = "crop_width" # Crop width, in pixels or as a percentage of the source width
+    value = "1000"
+[[stages.overrides]]
+name = "crop_height" # Crop height, in pixels or as a percentage of the source height
+    value = "1000"
+
+[[stages.overrides]]
+name = "rotate_deg" # Rotation angle in degrees after cropping
+# value = 0
+
+[processing.citation]
+
+# Summary information for each session processed.  Included with sessions is [stages] which allows per session
+# recipe exclusions/inclusions to be specified.
