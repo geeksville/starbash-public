@@ -1,0 +1,253 @@
+---
+layout: default
+title: "Pinwheel Galaxy by geeksville"
+description: "## Processing summary\n\n- **Sessions:** 1\n- **Total exposure:** 0.54 hours\n- **Filters used:** None\n- **Observation dates:** 2025-09-01\n"
+image: "/assets/targets/pinwheel-galaxy/hms_broadband.jpg"
+---
+
+# Pinwheel Galaxy
+
+## Processing summary
+
+- **Sessions:** 1
+- **Total exposure:** 0.54 hours
+- **Filters used:** None
+- **Observation dates:** 2025-09-01
+
+
+
+
+**Coordinates:** RA 14 03 11 / Dec +54 21 12
+
+
+
+
+![Pinwheel Galaxy](../../assets/targets/pinwheel-galaxy/hms_broadband.jpg)
+
+![Pinwheel Galaxy](../../assets/targets/pinwheel-galaxy/hms_nx_bx_bk_crop_stacked.jpg)
+
+![Pinwheel Galaxy](../../assets/targets/pinwheel-galaxy/hms_starless_broadband.jpg)
+
+![Pinwheel Galaxy](../../assets/targets/pinwheel-galaxy/merged_broadband.jpg)
+
+
+## Workflow
+
+
+
+The stages used to process this target, with each stage's parameters:
+
+<div class="sb-stages">
+<style>
+.sb-stages{margin:1.25em 0;font-size:.92rem;line-height:1.5}
+.sb-stages ul{list-style:none;margin:.25rem 0;padding:0}
+.sb-stages .sb-stage{margin:.35rem 0;padding-left:1.1rem;border-left:2px solid rgba(128,150,180,.45)}
+.sb-stages .sb-stage-name{font-weight:600}
+.sb-stages a.sb-stage-name{color:inherit;text-decoration:underline dotted;text-underline-offset:.15em}
+.sb-stages .sb-tool,.sb-stages .sb-role,.sb-stages .sb-skip{display:inline-block;margin-left:.45rem;padding:.05rem .45rem;border:1px solid rgba(128,150,180,.55);border-radius:.7rem;font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;opacity:.85;vertical-align:.1em}
+.sb-stages .sb-skip{border-style:dashed}
+.sb-stages .sb-stage.excluded{opacity:.55}
+.sb-stages .sb-stage.excluded .sb-stage-name{text-decoration:line-through}
+.sb-stages .sb-recipe{margin-left:.45rem;font-size:.78rem;opacity:.9}
+.sb-stages .sb-stage-desc{margin-left:.45rem;opacity:.7;font-size:.85rem}
+.sb-stages .sb-params{padding-left:1.35rem;margin:.1rem 0}
+.sb-stages .sb-param{margin:.05rem 0}
+.sb-stages .sb-pname{opacity:.92}
+.sb-stages .sb-default{color:#9fb0c3;font-weight:400}
+.sb-stages .sb-override{color:#ffb454;font-weight:700}
+.sb-stages .sb-legend{font-size:.8rem;opacity:.85;margin:.2rem 0 .6rem}
+</style>
+<div class="sb-legend">Parameters: <span class="sb-default">grey = recipe default</span> &middot; <span class="sb-override">amber = this target&rsquo;s override</span></div>
+<ul class="sb-stage-list">
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/master/dark.toml">master_dark</a> <span class="sb-tool">siril</span> <span class="sb-stage-desc">Generate master dark</span></div>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/master/bias.toml">master_bias</a> <span class="sb-tool">siril</span> <span class="sb-stage-desc">Generate master bias</span></div>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/master/flat.toml">master_flat</a> <span class="sb-tool">siril</span> <span class="sb-stage-desc">Generate master flat</span></div>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/osc/light_vs_bias.toml">light_vs_bias</a> <span class="sb-tool">siril</span> <span class="sb-stage-desc">Extract OSC light calibrated vs bias</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Light frame calibration options for OSC cameras"><span class="sb-pname">options</span> <span class="sb-default">= &quot;-cfa -equalize_cfa&quot;</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/osc/light_vs_dark.toml">light_vs_dark</a> <span class="sb-tool">siril</span> <span class="sb-stage-desc">Extract OSC light calibrated vs dark</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Light frame calibration options for OSC cameras"><span class="sb-pname">options</span> <span class="sb-default">= &quot;-cfa -equalize_cfa&quot;</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/osc/light_no_darks.toml">light_no_darks</a> <span class="sb-tool">siril</span> <span class="sb-stage-desc">Calibrate OSC lights that have no dark frames available</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Light frame calibration options for OSC cameras"><span class="sb-pname">options</span> <span class="sb-default">= &quot;-cfa -equalize_cfa&quot;</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/osc/stack_osc.toml">stack_osc</a> <span class="sb-tool">siril</span> <span class="sb-stage-desc">Basic OSC stacking (no fancy narrowband extraction)</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Registration options for Siril stacking"><span class="sb-pname">registration</span> <span class="sb-default">= &quot;rej w 3 3&quot;</span></li>
+<li class="sb-param" title="Filtering options for Siril (controls which frames are accepted for stacking) add -filter-round=80% -filter-bkg=80% for best results"><span class="sb-pname">filtering</span> <span class="sb-default">= &quot;-filter-wfwhm=80%&quot;</span></li>
+<li class="sb-param" title="Drizzle option for Siril stacking, set to empty string to disable, or -drizzle to enable"><span class="sb-pname">drizzle</span> <span class="sb-default">= &quot;&quot;</span></li>
+<li class="sb-param" title="Misc options for Siril stacking"><span class="sb-pname">options</span> <span class="sb-default">= &quot;-norm=addscale -output_norm -rgb_equal -32b&quot;</span></li>
+<li class="sb-param" title="Framing option for Siril stacking min/max/cog are recommended. cog requires all images to have same dimensions, so min/max is a safer default."><span class="sb-pname">framing</span> <span class="sb-default">= &quot;max&quot;</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/osc/seqextract_haoiii.toml">seqextract_haoiii</a> <span class="sb-tool">siril</span> <span class="sb-stage-desc">Extract OSC HaOiii channels</span></div>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/osc/stack_dual_duo.toml">stack_dual_duo</a> <span class="sb-tool">python</span> <span class="sb-role">stack</span> <span class="sb-stage-desc">Stack OSC dual duo (HaOiii + SiiOiii) filter data: with separate Ha, Oiii and Sii channels</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Drizzle option for Siril seqapplyreg, set to empty string to disable, or -drizzle to enable"><span class="sb-pname">drizzle</span> <span class="sb-default">= &quot;-drizzle&quot;</span></li>
+<li class="sb-param" title="Framing option for Siril seqapplyreg min/max/cog are recommended."><span class="sb-pname">framing</span> <span class="sb-default">= &quot;cog&quot;</span></li>
+<li class="sb-param" title="Filtering options for Siril seqapplyreg (controls which frames are accepted for stacking). add -filter-round=80% -filter-bkg=80% for better results, but possibly too much rejection."><span class="sb-pname">filtering</span> <span class="sb-default">= &quot;-filter-wfwhm=80% -filter-round=80% -filter-bkg=80%&quot;</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/osc/stack_single_duo.toml">stack_single_duo</a> <span class="sb-tool">python</span> <span class="sb-stage-desc">Stack OSC single duo (HaOiii) filter data: with separate Ha and Oiii channels</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Drizzle option for Siril seqapplyreg, set to empty string to disable, or -drizzle to enable"><span class="sb-pname">drizzle</span> <span class="sb-default">= &quot;-drizzle&quot;</span></li>
+<li class="sb-param" title="Framing option for Siril seqapplyreg min/max/cog are recommended."><span class="sb-pname">framing</span> <span class="sb-default">= &quot;cog&quot;</span></li>
+<li class="sb-param" title="Filtering options for Siril seqapplyreg (controls which frames are accepted for stacking)"><span class="sb-pname">filtering</span> <span class="sb-default">= &quot;-filter-wfwhm=80% -filter-round=80% -filter-bkg=80%&quot;</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/graxpert/background.toml">background</a> <span class="sb-tool">graxpert</span> <span class="sb-role">background</span> <span class="sb-stage-desc">Do background subtraction with graxpert</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Smoothing option for graxpert background extraction"><span class="sb-pname">smoothing_option</span> <span class="sb-default">= 0.5</span></li>
+<li class="sb-param" title="AI version for graxpert background extraction"><span class="sb-pname">ai_version</span> <span class="sb-default">= &quot;1.0.1&quot;</span></li>
+</ul>
+</li>
+<li class="sb-stage excluded">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/graxpert/deconv-obj.toml">deconv-obj</a> <span class="sb-tool">graxpert</span> <span class="sb-role">deblur</span> <span class="sb-skip">skipped</span> <span class="sb-stage-desc">Do object deconvolution with graxpert</span></div>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/rc-astro/blur-exterminator.toml">blur_exterminator</a> <span class="sb-tool">rc-astro</span> <span class="sb-role">deblur</span> <span class="sb-stage-desc">Sharpen/deconvolve with BlurXTerminator (rc-astro bxt)</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="BlurXTerminator stellar sharpening strength (0..1)"><span class="sb-pname">sharpen_stars</span> <span class="sb-default">= 0.5</span></li>
+<li class="sb-param" title="BlurXTerminator non-stellar sharpening strength (0..1)"><span class="sb-pname">sharpen_nonstellar</span> <span class="sb-default">= 0.5</span></li>
+</ul>
+</li>
+<li class="sb-stage excluded">
+<div class="sb-stage-head"><span class="sb-stage-name">denoise</span> <span class="sb-skip">skipped</span> <span class="sb-stage-desc">Do denoising with graxpert</span></div>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/rc-astro/noise-exterminator.toml">noise_exterminator</a> <span class="sb-tool">rc-astro</span> <span class="sb-role">denoise</span> <span class="sb-stage-desc">Denoise with NoiseXTerminator (rc-astro nxt)</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="NoiseXTerminator overall denoise strength (0..1)"><span class="sb-pname">denoise</span> <span class="sb-default">= 0.9</span></li>
+<li class="sb-param" title="NoiseXTerminator intensity denoise strength (0..1)"><span class="sb-pname">denoise_intensity</span> <span class="sb-default">(no default)</span></li>
+<li class="sb-param" title="NoiseXTerminator chrominance denoise strength (0..1)"><span class="sb-pname">denoise_color</span> <span class="sb-default">(no default)</span></li>
+<li class="sb-param" title="NoiseXTerminator high-frequency (small scale) denoise strength (0..1)"><span class="sb-pname">denoise_hf</span> <span class="sb-default">(no default)</span></li>
+<li class="sb-param" title="NoiseXTerminator low-frequency (large scale) denoise strength (0..1)"><span class="sb-pname">denoise_lf</span> <span class="sb-default">(no default)</span></li>
+<li class="sb-param" title="NoiseXTerminator high-frequency intensity denoise strength (0..1)"><span class="sb-pname">denoise_intensity_hf</span> <span class="sb-default">(no default)</span></li>
+<li class="sb-param" title="NoiseXTerminator low-frequency intensity denoise strength (0..1)"><span class="sb-pname">denoise_intensity_lf</span> <span class="sb-default">(no default)</span></li>
+<li class="sb-param" title="NoiseXTerminator high-frequency color denoise strength (0..1)"><span class="sb-pname">denoise_color_hf</span> <span class="sb-default">(no default)</span></li>
+<li class="sb-param" title="NoiseXTerminator low-frequency color denoise strength (0..1)"><span class="sb-pname">denoise_color_lf</span> <span class="sb-default">(no default)</span></li>
+<li class="sb-param" title="Pixel scale of the low/high frequency transition band (1..100)"><span class="sb-pname">frequency_scale</span> <span class="sb-default">(no default)</span></li>
+<li class="sb-param" title="Number of denoising iterations (1..5)"><span class="sb-pname">iterations</span> <span class="sb-default">= 2</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/palette/sho.toml">palette_sho</a> <span class="sb-tool">siril</span> <span class="sb-stage-desc">SHO palette: R=Ha, G=Sii-or-synthetic, B=OIII</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Ha contribution when synthesizing the green channel (0..1)"><span class="sb-pname">ha_weight</span> <span class="sb-default">= 0.4</span></li>
+<li class="sb-param" title="OIII contribution when synthesizing the green channel (0..1)"><span class="sb-pname">oiii_weight</span> <span class="sb-default">= 0.6</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/palette/hoo.toml">palette_hoo</a> <span class="sb-tool">siril</span> <span class="sb-stage-desc">HOO palette: R=Ha, G=OIII (optionally blended with Ha), B=OIII</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Ha contribution mixed into the green (OIII) channel (0..1); 0 = pure OIII green"><span class="sb-pname">green_ha_weight</span> <span class="sb-default">= 0.0</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/common/starnet.toml">starnet</a> <span class="sb-tool">starnet</span> <span class="sb-stage-desc">Star removal with StarNet via Siril</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Options passed to the Siril &#x27;starnet&#x27; command (e.g. -stretch, -upscale, -stride=value)"><span class="sb-pname">params</span> <span class="sb-default">= &quot;-stretch&quot;</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/siril-scripts/refs/heads/main/processing/VeraLux_HyperMetric_Stretch.toml">veralux</a> <span class="sb-tool">python</span> <span class="sb-stage-desc">Do VeraLux HyperMetric Stretching</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="What background level should be targeted for VeraLux HyperMetric Stretch"><span class="sb-pname">background</span> <span class="sb-default">= 0.1</span></li>
+<li class="sb-param" title="Stretch (Log D): hyperbolic intensity. Higher = brighter midtones."><span class="sb-pname">log_d</span> <span class="sb-default">(no default)</span></li>
+<li class="sb-param" title="Highlight Protection (b): controls the stretch curve &#x27;knee&#x27;. Higher (&gt;6.0) protects stars from bloating; lower (&lt;2.0) gives brighter highlights but risks bloating."><span class="sb-pname">protect_b</span> <span class="sb-default">(no default)</span></li>
+<li class="sb-param" title="Star Recovery (White Point): color convergence. Determines how fast a saturated core fades to pure white; increase to fix &#x27;donut&#x27; artifacts or holes in stars."><span class="sb-pname">star_recovery</span> <span class="sb-default">(no default)</span></li>
+<li class="sb-param" title="Color Grip: vector strictness in highlights. 1.0 = pure vector (vivid); &lt; 1.0 = hybrid (softer stars)."><span class="sb-pname">color_grip</span> <span class="sb-default">(no default)</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/post/merge_stars.toml">merge_stars</a> <span class="sb-tool">siril</span> <span class="sb-stage-desc">Screen-blend the removed stars back into the stretched starless image</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="asinh stretch factor applied to the linear starmask before blending (higher = more stars visible)"><span class="sb-pname">stretch</span> <span class="sb-default">= 1000.0</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/common/thumbnail.toml">thumbnail</a> <span class="sb-tool">siril</span> <span class="sb-stage-desc">Generate a stretched thumbnail image</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Maximum dimension for the thumbnail image"><span class="sb-pname">size</span> <span class="sb-default">= 1600</span></li>
+<li class="sb-param" title="Quality setting for the thumbnail image (1-100)"><span class="sb-pname">quality</span> <span class="sb-default">= 95</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/common/crop.toml">crop</a> <span class="sb-tool">python</span> <span class="sb-stage-desc">Crop and rotate stacked FITS outputs</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Maximum crop width, in pixels or as a percentage of the source width"><span class="sb-pname">crop_width</span> <span class="sb-override">= &quot;50%&quot;</span> <span class="sb-default">(default &quot;80%&quot;)</span></li>
+<li class="sb-param" title="Maximum crop height, in pixels or as a percentage of the source height"><span class="sb-pname">crop_height</span> <span class="sb-override">= &quot;50%&quot;</span> <span class="sb-default">(default &quot;80%&quot;)</span></li>
+<li class="sb-param" title="Rotation angle in degrees after cropping"><span class="sb-pname">rotate_deg</span> <span class="sb-default">= 0</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/osc/report_registration.toml">report_stack_osc</a> <span class="sb-tool">python</span> <span class="sb-stage-desc">Record per-frame registration metrics for basic OSC stacks</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Registered sequence basename in process_dir (without _.seq suffix). stack_osc stacks r_osc, so r_osc_.seq carries the registration rows."><span class="sb-pname">seq_basename</span> <span class="sb-default">= &quot;r_osc&quot;</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/osc/report_registration.toml">report_duo</a> <span class="sb-tool">python</span> <span class="sb-stage-desc">Record per-frame registration metrics for duo stacks</span></div>
+<ul class="sb-params">
+<li class="sb-param" title="Registered sequence basename in process_dir (without _.seq suffix)"><span class="sb-pname">seq_basename</span> <span class="sb-default">= &quot;r_all_ha&quot;</span></li>
+</ul>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/palette/broadband.toml">palette_broadband</a> <span class="sb-tool">siril</span> <span class="sb-stage-desc">Broadband palette: load the denoised broadband stack and save it as broadband.fits</span></div>
+</li>
+<li class="sb-stage">
+<div class="sb-stage-head"><a class="sb-stage-name" href="https://raw.githubusercontent.com/geeksville/starbash-recipes/v0.3.4/graxpert/grax-denoise.toml">grax-denoise</a> <span class="sb-tool">graxpert</span> <span class="sb-role">denoise</span> <span class="sb-stage-desc">Do denoising with graxpert</span></div>
+</li>
+</ul>
+</div>
+
+
+
+
+[View processing workflow](../../assets/targets/pinwheel-galaxy/main.toml)
+
+
+## Sessions
+
+
+### 2025-09-01
+
+
+
+| Focal length | Focal ratio | Image scale |
+| --- | --- | --- |
+| 384.0 mm | f/4.8 | 2.02 arcsec/pixel |
+
+
+| Equipment | Model |
+| --- | --- |
+| camera | ASI Camera (1) (ASCOM) |
+| telescope | [Askar V APO Refractor](https://www.highpointscientific.com/askar-v-60mm-and-80mm-apo-refractor-w-accessories) |
+| filter | None |
+| filterwheel | ZWO FilterWheel (1) |
+
+
+![Session timeline](../../assets/targets/pinwheel-galaxy/session-1.svg)
+
+
